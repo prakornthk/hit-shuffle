@@ -20,6 +20,7 @@
     --text:#F2F4F8;
     --muted:#9AA3B2;
     --accent:#7C5CFF;
+    --accent-serial:#9779FF;      /* จุดต้น gradient ของเลขบัตรเท่านั้น — ผ่าน AA ≥4.5:1 บน surface (ตัวอักษรเล็ก) */
     --accent-2:#38BDF8;
     --grad:linear-gradient(120deg,var(--accent),var(--accent-2));
     --on-accent:#05060A;          /* ตัวอักษรบนพื้น gradient — ผ่าน AA ≥4.5:1 ทั้งแถบ */
@@ -69,9 +70,12 @@
     display:flex;
     gap:8px;
     overflow-x:auto;
-    padding:20px 4px 8px;
+    padding:20px 36px 8px 4px;      /* ท้ายแถบเผื่อให้ชิปสุดท้ายพ้นเขต fade ตอน scroll สุด */
     scrollbar-width:thin;
     scrollbar-color:rgba(255,255,255,.18) transparent;
+    /* fade ขอบขวาความกว้างคงที่ — บอกว่าเลื่อนต่อได้ และไม่ทับชิปที่เลือกตอน scroll สุด */
+    -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);
+    mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);
   }
   .months::-webkit-scrollbar{height:6px}
   .months::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:3px}
@@ -206,7 +210,7 @@
     color:var(--muted);
   }
   .serial .no{ /* เลขบัตร gradient — คงไว้เพราะ deep link อ้างบัตรใบเดียวกัน */
-    background:var(--grad);
+    background:linear-gradient(120deg,var(--accent-serial),var(--accent-2));
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
@@ -363,11 +367,6 @@
     .art{height:72px}
     .main{grid-column:1;grid-row:2;padding:20px 20px 24px}
     .stub{grid-column:1;grid-row:3;border-left:none;border-top:1px solid var(--line)}
-    /* fade ขอบขวาของแถบเดือน — บอกว่าเลื่อนต่อได้ */
-    .months{
-      -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);
-      mask-image:linear-gradient(90deg,#000 88%,transparent);
-    }
   }
 </style>
 </head>
